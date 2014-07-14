@@ -1,0 +1,97 @@
+" instantRest.vim
+" Got the solution in python way from suan's instant-markdown
+" https://github.com/suan/instant-markdown-d
+
+if !exists('g:instant_rest_slow')
+    let g:instant_rest_slow = 0
+endif
+
+if !exists('g:instant_rest_autostart')
+    let g:instant_rest_autostart = 1
+endif
+
+let s:autoload_path = expand('<sfile>:p:h')
+let s:daemon_started = 0
+let s:buffers = {}
+
+function! s:startDaemon()
+    if !s:daemon_started
+        let  cmd = "python ".s:autoload_path."/instantRest.py &>/dev/null &"
+        call system(cmd)
+        let s:daemon_started = 1
+    endif
+
+endfu
+
+function! s:killDaemon()
+    if s:daemon_started
+        call system("curl -s -X DELETE http://localhost:5676 / &>/dev/null &")
+        let s:daemon_started = 0
+    endif
+endfu
+fun! s:updateTmpFile(bufname)
+    if !exists("b:ir_tmpfile")
+        let b:ir_tmpfile = tempname()
+    endif
+    let buf = getbufline(a:bufname, 1, "$")
+    call writefile(buf, b:ir_tmpfile)
+endfun
+ 
+fun! s:refreshView()
+    call s:updateTmpFile(bufnr('%'))
+    let cmd = "curl -d 'file=". b:ir_tmpfile ."' http://localhost:5676 &>/dev/null &"
+    call system(cmd)
+endfun
+
+fu! s:temperedRefresh()
+    if !exists('b:changedtickLast')
+        let b:changedtickLast = b:changedtick
+        call s:refreshView()
+    elseif b:changedtickLast != b:changedtick
+        let b:changedtickLast = b:changedtick
+        call s:refreshView()
+    endif
+endfu
+
+
+function! s:pushBuffer(bufnr)
+    let s:buffers[a:bufnr] = 1
+endfu
+
+function! s:popBuffer(bufnr)
+    call remove(s:buffers, a:bufnr)
+endfu
+
+fu! s:cleanUp()
+    call s:popBuffer(bufnr('%'))
+
+    if len(s:buffers) == 0
+        call s:killDaemon()
+    endif
+  
+    if filereadable(b:ir_tmpfile)
+        call delete(b:ir_tmpfile)
+    endif
+
+    au! instant-rest * <buffer>
+endfu
+
+
+fu! s:preview()
+    call s:startDaemon()
+    call s:pushBuffer(bufnr('%'))
+    call s:refreshView()
+
+    aug instant-rest
+        if g:instant_rest_slow
+            au CursorHold,BufWrite,InsertLeave <buffer> call s:temperedRefresh()
+        else
+            au CursorHold,CursorHoldI,CursorMoved,CursorMovedI <buffer> call s:temperedRefresh()
+        endif
+        au BufWinLeave <buffer> call s:cleanUp()
+    aug END
+endfu
+
+
+command! -buffer InstantRest call s:preview()
+command! -buffer StopInstantRest call s:cleanUp()
