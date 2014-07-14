@@ -1,4 +1,4 @@
-instantRest
+InstantRest
 ===========
 
 It's a kind of thing like instan-markdown-d_, but for 
