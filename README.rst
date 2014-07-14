@@ -7,8 +7,8 @@ restructuredtext and using python.
 Install:
 --------
 
-1. Vundle
-2. pip install flask flask-socketio docutils pygments
+1. Vundle `Rykka/InstantRest`
+2. Python: `pip install flask flask-socketio docutils pygments`
 
 Usage
 -----
