@@ -1,13 +1,13 @@
-" instantRest.vim
+" instantRst.vim
 " Got the solution in python way from suan's instant-markdown
 " https://github.com/suan/instant-markdown-d
 
-if !exists('g:instant_rest_slow')
-    let g:instant_rest_slow = 0
+if !exists('g:instant_rst_slow')
+    let g:instant_rst_slow = 0
 endif
 
-if !exists('g:instant_rest_autostart')
-    let g:instant_rest_autostart = 1
+if !exists('g:instant_rst_autostart')
+    let g:instant_rst_autostart = 1
 endif
 
 let s:autoload_path = expand('<sfile>:p:h')
@@ -16,7 +16,7 @@ let s:buffers = {}
 
 function! s:startDaemon()
     if !s:daemon_started
-        let  cmd = "python ".s:autoload_path."/instantRest.py &>/dev/null &"
+        let  cmd = "python ".s:autoload_path."/instantRst.py &>/dev/null &"
         call system(cmd)
         let s:daemon_started = 1
     endif
@@ -73,7 +73,7 @@ fu! s:cleanUp()
         call delete(b:ir_tmpfile)
     endif
 
-    au! instant-rest * <buffer>
+    au! instant-rst * <buffer>
 endfu
 
 
@@ -82,8 +82,8 @@ fu! s:preview()
     call s:pushBuffer(bufnr('%'))
     call s:refreshView()
 
-    aug instant-rest
-        if g:instant_rest_slow
+    aug instant-rst
+        if g:instant_rst_slow
             au CursorHold,BufWrite,InsertLeave <buffer> call s:temperedRefresh()
         else
             au CursorHold,CursorHoldI,CursorMoved,CursorMovedI <buffer> call s:temperedRefresh()
@@ -93,5 +93,5 @@ fu! s:preview()
 endfu
 
 
-command! -buffer InstantRest call s:preview()
-command! -buffer StopInstantRest call s:cleanUp()
+command! -buffer InstantRst call s:preview()
+command! -buffer StopInstantRst call s:cleanUp()

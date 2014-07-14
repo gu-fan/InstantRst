@@ -1,25 +1,10 @@
-/*
-:Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 7434 2012-05-11 21:06:27Z milde $
-:Copyright: This stylesheet has been placed in the public domain.
-
-Default cascading style sheet for the HTML output of Docutils.
-
-See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
-customize this style sheet.
-*/
-
-/* used to remove borders from tables and images */
 .borderless, table.borderless td, table.borderless th {
   border: 0 }
 
 table.borderless td, table.borderless th {
-  /* Override padding for "table.docutils td" with "! important".
-     The right padding separates the table cells. */
   padding: 0 0.5em 0 0 ! important }
 
 .first {
-  /* Override more specific margin styles with "! important". */
   margin-top: 0 ! important }
 
 .last, .with-subtitle {
@@ -42,10 +27,8 @@ object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
   overflow: hidden;
 }
 
-/* Uncomment (and remove this text!) to get bold-faced definition list terms
 dl.docutils dt {
   font-weight: bold }
-*/
 
 div.abstract {
   margin: 2em 5em }
@@ -73,14 +56,11 @@ div.warning p.admonition-title {
   font-weight: bold ;
   font-family: sans-serif }
 
-/* Uncomment (and remove this text!) to get reduced vertical space in
-   compound paragraphs.
 div.compound .compound-first, div.compound .compound-middle {
   margin-bottom: 0.5em }
 
 div.compound .compound-last, div.compound .compound-middle {
   margin-top: 0.5em }
-*/
 
 div.dedication {
   margin: 2em 5em ;
