@@ -1,3 +1,6 @@
+body {
+    background-color: #FFFDF7;
+}
 .borderless, table.borderless td, table.borderless th {
   border: 0 }
 

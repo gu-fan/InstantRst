@@ -6,8 +6,8 @@ if !exists('g:instant_rst_slow')
     let g:instant_rst_slow = 0
 endif
 
-if !exists('g:instant_rst_autostart')
-    let g:instant_rst_autostart = 1
+if !exists('g:instant_rst_browser')
+    let g:instant_rst_browser = ''
 endif
 
 let s:autoload_path = expand('<sfile>:p:h')
@@ -19,6 +19,9 @@ function! s:startDaemon()
         let  cmd = "python ".s:autoload_path."/instantRst.py &>/dev/null &"
         call system(cmd)
         let s:daemon_started = 1
+        if !empty(g:instant_rst_browser)
+            sil! exe '!'.g:instant_rst_browser.' http://localhost:5676/'
+        endif
     endif
 
 endfu
@@ -78,6 +81,11 @@ endfu
 
 
 fu! s:preview()
+    echohl ModeMsg
+    echon "[InstantRst]"
+    echohl Normal
+    echon " Preview buffer at http://localhost:5676/"
+
     call s:startDaemon()
     call s:pushBuffer(bufnr('%'))
     call s:refreshView()

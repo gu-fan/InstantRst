@@ -13,10 +13,25 @@ Install:
 Usage
 -----
 
-in rst buffer, you can use `:InstantRst` to preview current buffer.
+In rst buffer, 
+Use ``:InstantRst`` to preview current buffer.
 
-use `:StopInstantRst` to stop Preview current buffer
+Use ``:StopInstantRst`` to stop Preview current buffer
 
-you should open a browser with http://localhost:5676
+You should open a browser with http://localhost:5676
+
+**Options:**
+
+    `g:instant_rst_slow`: preview rst fast or slow, default is 0.
+    `g:instant_rst_browser`: preview rst with browser. default is ''.
+
+
+
+Related
+-------
+
+You can use Riv.vim_ to write your rst documents.
 
 .. _instan-markdown-d: https://github.com/suan/instant-markdown-d
+
+.. _Riv.vim: https://github.com/Rykka/riv.vim
