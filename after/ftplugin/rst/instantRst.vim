@@ -10,15 +10,23 @@ if !exists('g:instant_rst_browser')
     let g:instant_rst_browser = ''
 endif
 
-let s:autoload_path = expand('<sfile>:p:h')
-let s:daemon_started = 0
-let s:buffers = {}
+if !exists('g:_instant_rst_daemon_started')
+    let g:_instant_rst_daemon_started = 0
+endif
+
+if !exists('s:autoload_path')
+    let s:autoload_path = expand('<sfile>:p:h')
+endif
+
+if !exists('s:buffers')
+    let s:buffers = {}
+endif
 
 function! s:startDaemon()
-    if !s:daemon_started
+    if g:_instant_rst_daemon_started == 0
         let  cmd = "python ".s:autoload_path."/instantRst.py &>/dev/null &"
         call system(cmd)
-        let s:daemon_started = 1
+        let g:_instant_rst_daemon_started = 1
         if !empty(g:instant_rst_browser)
             sil! exe '!'.g:instant_rst_browser.' http://localhost:5676/'
         endif
@@ -27,9 +35,9 @@ function! s:startDaemon()
 endfu
 
 function! s:killDaemon()
-    if s:daemon_started
+    if g:_instant_rst_daemon_started == 1
         call system("curl -s -X DELETE http://localhost:5676 / &>/dev/null &")
-        let s:daemon_started = 0
+        let g:_instant_rst_daemon_started = 0
     endif
 endfu
 fun! s:updateTmpFile(bufname)

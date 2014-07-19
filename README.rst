@@ -1,8 +1,13 @@
 InstantRst
 ===========
 
-It's a kind of thing like instan-markdown-d_, but for 
-reStructuredText and using python.
+It's a webserver and vim plugin for you to preview rst instantly,
+
+Kind of thing like instan-markdown-d_, 
+
+But for reStructuredText and using python.
+
+And it's using sofish's typo.css_ for better layout.
 
 Install:
 --------
@@ -13,12 +18,13 @@ Install:
 Usage
 -----
 
-In rst buffer, 
+In a rst buffer:
+
 Use ``:InstantRst`` to preview current buffer.
 
 Use ``:StopInstantRst`` to stop Preview current buffer
 
-You should open a browser with http://localhost:5676
+You should open a browser at http://localhost:5676
 
 **Options:**
 
@@ -26,6 +32,14 @@ You should open a browser with http://localhost:5676
     `g:instant_rst_browser`: preview rst with browser. default is ''.
 
 
+And you can start the server by your self. which is ``after/ftplugin/rst/instantRst.py``
+
+with command ``python /path/to/instantRst.py``
+
+TODO
+----
+
+1. rst's inline image file contained are not displayed.
 
 Related
 -------
@@ -35,3 +49,5 @@ You can use Riv.vim_ to write your rst documents.
 .. _instan-markdown-d: https://github.com/suan/instant-markdown-d
 
 .. _Riv.vim: https://github.com/Rykka/riv.vim
+
+.. _typo.css: https://github.com/sofish/Typo.css
