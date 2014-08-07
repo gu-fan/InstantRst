@@ -21,11 +21,19 @@ endif
 if !exists('s:buffers')
     let s:buffers = {}
 endif
+fun! s:system(cmd) abort
+    if exists("*vimproc#system")
+        call vimproc#system(cmd)
+    else
+        call system(cmd)
+    endif
+    <`0`>
+endfun
 
 function! s:startDaemon()
     if g:_instant_rst_daemon_started == 0
         let  cmd = "python ".s:autoload_path."/instantRst.py &>/dev/null &"
-        call system(cmd)
+        call vimproc#system(cmd)
         let g:_instant_rst_daemon_started = 1
         if !empty(g:instant_rst_browser)
             sil! exe '!'.g:instant_rst_browser.' http://localhost:5676/'
@@ -36,7 +44,7 @@ endfu
 
 function! s:killDaemon()
     if g:_instant_rst_daemon_started == 1
-        call system("curl -s -X DELETE http://localhost:5676 / &>/dev/null &")
+        call vimproc#system("curl -s -X DELETE http://localhost:5676 / &>/dev/null &")
         let g:_instant_rst_daemon_started = 0
     endif
 endfu
@@ -51,7 +59,9 @@ endfun
 fun! s:refreshView()
     call s:updateTmpFile(bufnr('%'))
     let cmd = "curl -d 'file=". b:ir_tmpfile ."' http://localhost:5676 &>/dev/null &"
-    call system(cmd)
+    " >>> let cmd = 'curl -d name=hello http://localhost:5676'
+    " >>> call vimproc#system(cmd)
+    call vimproc#system(cmd)
 endfun
 
 fu! s:temperedRefresh()
@@ -88,7 +98,7 @@ fu! s:cleanUp()
 endfu
 
 
-fu! s:preview()
+fu! s:preview(bang)
     echohl ModeMsg
     echon "[InstantRst]"
     echohl Normal
@@ -98,16 +108,28 @@ fu! s:preview()
     call s:pushBuffer(bufnr('%'))
     call s:refreshView()
 
-    aug instant-rst
-        if g:instant_rst_slow
-            au CursorHold,BufWrite,InsertLeave <buffer> call s:temperedRefresh()
-        else
-            au CursorHold,CursorHoldI,CursorMoved,CursorMovedI <buffer> call s:temperedRefresh()
-        endif
-        au BufWinLeave <buffer> call s:cleanUp()
-    aug END
+    if a:bang == '!'
+        " Add a always preview rst mode
+        aug instant-rst
+            if g:instant_rst_slow
+                au WinEnter,CursorHold,BufWrite,InsertLeave *.rst call s:temperedRefresh()
+            else
+                au WinEnter,CursorHold,CursorHoldI,CursorMoved,CursorMovedI *.rst call s:temperedRefresh()
+            endif
+            au VimLeave <buffer> call s:cleanUp()
+        aug END
+    else
+        aug instant-rst
+            if g:instant_rst_slow
+                au CursorHold,BufWrite,InsertLeave <buffer> call s:temperedRefresh()
+            else
+                au CursorHold,CursorHoldI,CursorMoved,CursorMovedI <buffer> call s:temperedRefresh()
+            endif
+            au BufWinLeave <buffer> call s:cleanUp()
+        aug END
+    endif
 endfu
 
 
-command! -buffer InstantRst call s:preview()
+command! -bang -buffer InstantRst call s:preview('<bang>')
 command! -buffer StopInstantRst call s:cleanUp()

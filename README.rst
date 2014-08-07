@@ -22,6 +22,8 @@ In a rst buffer:
 
 Use ``:InstantRst`` to preview current buffer.
 
+And you can use ``InstantRst!`` to preview all rst buffer.
+
 Use ``:StopInstantRst`` to stop Preview current buffer
 
 You should open a browser at http://localhost:5676
