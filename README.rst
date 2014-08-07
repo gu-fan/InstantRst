@@ -1,19 +1,24 @@
 InstantRst
 ===========
 
-It's a webserver and vim plugin for you to preview rst instantly,
+:version: 0.9
 
-Kind of thing like instan-markdown-d_, 
+It's a webserver and vim plugin for you to preview rst instantly.
 
-But for reStructuredText and using python.
+.. image:: http://i.imgur.com/9R8P6HD.gif
 
-And it's using sofish's typo.css_ for better layout.
+Like instan-markdown-d_, But for reStructuredText and using python.
 
-Install:
---------
+And using sofish's typo.css_ for better layout.
 
-1. Vundle `Rykka/InstantRst`
-2. Python: `pip install flask flask-socketio docutils pygments`
+Install
+-------
+
+1. Using Vundle or NeoBundle
+   ``Rykka/InstantRst``
+
+2. Python:
+   ``sudo pip install flask flask-socketio docutils pygments``
 
 Usage
 -----
