@@ -9,8 +9,6 @@ It's a webserver and vim plugin for you to preview rst instantly.
 
 Like instan-markdown-d_, But for reStructuredText and using python.
 
-And using sofish's typo.css_ for better layout.
-
 Install
 -------
 
