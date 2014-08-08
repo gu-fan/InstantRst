@@ -1,13 +1,22 @@
 InstantRst
 ===========
 
+    So, You'll see.
+
+    -- InstantRst
+
+
 :version: 0.9
 
-It's a webserver and vim plugin for you to preview rst instantly.
+A vim plugin for you to preview rst instantly.
 
-.. image:: http://i.imgur.com/9R8P6HD.gif
+And a webserver contained in.
 
-Like instan-markdown-d_, But for reStructuredText and using python.
+A screencast with Riv.vim_ and InstantRst_
+
+.. image:: https://github.com/Rykka/riv.vim/raw/master/intro.gif
+
+Like instant-markdown-d_, But for reStructuredText and using python.
 
 Install
 -------
@@ -51,8 +60,9 @@ Related
 
 You can use Riv.vim_ to write your rst documents.
 
-.. _instan-markdown-d: https://github.com/suan/instant-markdown-d
+.. _instant-markdown-d: https://github.com/suan/instant-markdown-d
 
 .. _Riv.vim: https://github.com/Rykka/riv.vim
 
 .. _typo.css: https://github.com/sofish/Typo.css
+
