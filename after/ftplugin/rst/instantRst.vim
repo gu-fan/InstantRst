@@ -6,6 +6,10 @@ if !exists('g:instant_rst_slow')
     let g:instant_rst_slow = 0
 endif
 
+if !exists('g:instant_rst_forever')
+    let g:instant_rst_forever = 0
+endif
+
 if !exists('g:instant_rst_browser')
     let g:instant_rst_browser = ''
 endif
@@ -108,7 +112,7 @@ fu! s:preview(bang)
     call s:pushBuffer(bufnr('%'))
     call s:refreshView()
 
-    if a:bang == '!'
+    if a:bang == '!' ||  g:instant_rst_forever == 1
         " Add a always preview rst mode
         aug instant-rst
             if g:instant_rst_slow

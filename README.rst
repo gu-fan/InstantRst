@@ -18,6 +18,8 @@ A screencast with Riv.vim_ and InstantRst_
 
 Like instant-markdown-d_, But for reStructuredText and using python.
 
+The theme is http://rykka.github.io/rst-html-theme/
+
 Install
 -------
 
@@ -44,6 +46,7 @@ You should open a browser at http://localhost:5676
 
     `g:instant_rst_slow`: preview rst fast or slow, default is 0.
     `g:instant_rst_browser`: preview rst with browser. default is ''.
+    `g:instant_rst_forever`: auto preview all rst buffer, default is 0.
 
 
 And you can start the server by your self. which is ``after/ftplugin/rst/instantRst.py``

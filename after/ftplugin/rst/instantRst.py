@@ -15,6 +15,7 @@ def html_parts(input_string, source_path=None, destination_path=None,
                initial_header_level=1):
     overrides = {'input_encoding': input_encoding,
                  'doctitle_xform': doctitle,
+                 'syntax_highlight': 'short',
                  'initial_header_level': initial_header_level}
     parts = core.publish_parts(
         source=input_string, source_path=source_path,
