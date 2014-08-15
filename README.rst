@@ -64,8 +64,6 @@ Related
 You can use Riv.vim_ to write your rst documents.
 
 .. _instant-markdown-d: https://github.com/suan/instant-markdown-d
-
 .. _Riv.vim: https://github.com/Rykka/riv.vim
-
 .. _typo.css: https://github.com/sofish/Typo.css
 
