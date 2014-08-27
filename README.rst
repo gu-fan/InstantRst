@@ -16,7 +16,7 @@ A screencast with Riv.vim_ and InstantRst_
 
 .. image:: https://github.com/Rykka/riv.vim/raw/master/intro.gif
 
-The theme is http://rykka.github.io/rst-html-theme/
+The theme is http://rykka.github.io/rhythm.css/
 
 This is an intro for vim usage. To use the server, see instant-rst.py_.
 
