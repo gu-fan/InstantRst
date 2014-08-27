@@ -12,7 +12,7 @@ InstantRst
 
 A vim plugin for preview rst document instantly.
 
-Screencast(It's a bit outdated,  anyone create a new one are welcome)
+Screencast with Riv.vim_ (It's a bit outdated,  anyone create a new one are welcome)
 .. image:: https://github.com/Rykka/riv.vim/raw/master/intro.gif
 
 The theme is http://rykka.github.io/rhythm.css/
