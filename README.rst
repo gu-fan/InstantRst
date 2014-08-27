@@ -1,7 +1,7 @@
 InstantRst
 ===========
 
-:version: 0.97
+:version: 0.9.7
 
 ..
 
