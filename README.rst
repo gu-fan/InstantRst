@@ -19,6 +19,8 @@ A vim plugin for preview rst document instantly.
 
     Theme with rhythm.css_
 
+----
+
 This is an intro for vim usage.
 
 To use the server, see instant-rst.py_.
