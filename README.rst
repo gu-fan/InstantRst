@@ -12,13 +12,15 @@ InstantRst
 
 A vim plugin for preview rst document instantly.
 
-Screencast with Riv.vim_ (It's a bit outdated,  anyone create a new one are welcome)
+.. figure:: https://github.com/Rykka/github_things/raw/master/image/rst_quick_start.gif 
+    :align: center
 
-.. image:: https://github.com/Rykka/riv.vim/raw/master/intro.gif
+    Screencast with riv.vim_
 
-The theme is http://rykka.github.io/rhythm.css/
+    Theme with rhythm.css_
 
 This is an intro for vim usage.
+
 To use the server, see instant-rst.py_.
 
 Install
@@ -104,3 +106,4 @@ MIT
 .. _Riv.vim: https://github.com/Rykka/riv.vim
 .. _typo.css: https://github.com/sofish/Typo.css
 .. _instant-rst.py: https://github.com/rykka/instant-rst.py
+.. _rhythm.css: https://github.com/Rykka/rhythm.css

@@ -55,6 +55,7 @@ function! s:startDaemon(file) "{{{
                     \.args_browser
                     \.args_port
                     \.args_file
+                    \.' &>/dev/null'
                     \.' &'
         call s:system(cmd)
         let g:_instant_rst_daemon_started = 1
@@ -153,6 +154,7 @@ fu! s:preview(bang)
     if a:bang == '!' ||  g:instant_rst_forever == 1
         " Add a always preview rst mode
         aug instant-rst
+            au!
             if g:instant_rst_slow
                 au CursorHold,BufWrite,InsertLeave *.rst call s:temperedRefresh()
             else
