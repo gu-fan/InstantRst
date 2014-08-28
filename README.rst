@@ -105,7 +105,7 @@ License
 MIT
 
 .. sectnum::
-.. _Riv.vim: https://github.com/Rykka/riv.vim
+.. _riv.vim: https://github.com/Rykka/riv.vim
 .. _typo.css: https://github.com/sofish/Typo.css
 .. _instant-rst.py: https://github.com/rykka/instant-rst.py
 .. _rhythm.css: https://github.com/Rykka/rhythm.css
