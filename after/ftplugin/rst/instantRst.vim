@@ -19,6 +19,14 @@ if !exists('g:instant_rst_browser')
     let g:instant_rst_browser = ''
 endif
 
+if !exists('g:instant_rst_static')
+    let g:instant_rst_static = ''
+endif
+
+if !exists('g:instant_rst_template')
+    let g:instant_rst_template = ''
+endif
+
 if !exists('g:instant_rst_port')
     let g:instant_rst_port = 5676
 endif
@@ -48,6 +56,10 @@ function! s:startDaemon(file) "{{{
                     \ ' -b '.g:instant_rst_browser : ''
         let args_port = g:instant_rst_port != 5676 ? 
                     \ ' -p '.g:instant_rst_port : ''
+        let args_static = g:instant_rst_static != '' ? 
+                    \ ' -s '.g:instant_rst_static : ''
+        let args_template = g:instant_rst_template != '' ? 
+                    \ ' -t '.g:instant_rst_template : ''
         let args_file = a:file != '' ? 
                     \ ' -f '.a:file : ''
 
@@ -55,6 +67,8 @@ function! s:startDaemon(file) "{{{
                     \.args_browser
                     \.args_port
                     \.args_file
+                    \.args_static
+                    \.args_template
                     \.' &>/dev/null'
                     \.' &'
         call s:system(cmd)
