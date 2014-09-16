@@ -71,6 +71,17 @@ g:instant_rst_browser
     Web browser for preview. default is ``''``.
     And then ``firefox`` will be used.
 
+g:instant_rst_template
+    Directory where the template for rendered pages is located.
+
+    Defaults to using rhythm.css_, that is bundled with the server.
+
+g:instant_rst_static
+    Directory for static files used by the template.     
+    To be used together with g:instant_rst_template
+    
+    Also defaults to the bundled rhythm.css_
+
 g:instant_rst_port
     The port of webserver, default is ``5676``.
 
@@ -96,7 +107,7 @@ Related
 
 This plugin is for Riv.vim_.
 
-which is vim plugin for writing rst documents.
+which is a vim plugin for writing rst documents.
 
 License
 -------
