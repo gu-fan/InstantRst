@@ -154,20 +154,21 @@ fu! s:preview(bang)
     if a:bang == '!' ||  g:instant_rst_forever == 1
         " Add a always preview rst mode
         aug instant-rst
-            au!
+            au! 
             if g:instant_rst_slow
-                au CursorHold,BufWrite,InsertLeave *.rst call s:temperedRefresh()
+                au CursorHold,BufWrite,InsertLeave <buffer>,*.rst call s:temperedRefresh()
             else
-                au CursorHold,CursorHoldI,CursorMoved,CursorMovedI *.rst call s:temperedRefresh()
+                au CursorHold,CursorHoldI,CursorMoved,CursorMovedI <buffer>,*.rst call s:temperedRefresh()
             endif
             if g:instant_rst_bind_scroll
-                au CursorHold,CursorHoldI,CursorMoved,CursorMovedI *.rst call s:scroll()
+                au CursorHold,CursorHoldI,CursorMoved,CursorMovedI <buffer>,*.rst call s:scroll()
             endif
-            au BufWinEnter,WinEnter *.rst call s:refreshView()
+            au BufWinEnter,WinEnter <buffer>,*.rst call s:refreshView()
             au VimLeave * call s:cleanUp('!')
         aug END
     else
         aug instant-rst
+            au! <buffer>
             if g:instant_rst_slow
                 au CursorHold,BufWrite,InsertLeave <buffer> call s:temperedRefresh()
             else

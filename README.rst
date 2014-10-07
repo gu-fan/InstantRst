@@ -98,6 +98,19 @@ This plugin is for Riv.vim_.
 
 which is vim plugin for writing rst documents.
 
+Issues
+------
+for debian user, you may need to install gevent manually
+
+::
+
+    sudo apt-get install libevent-dev
+    sudo apt-get install python-all-dev
+    sudo pip install greenlet
+    sudo pip install gevent
+
+
+
 License
 -------
 
