@@ -168,7 +168,7 @@ fu! s:preview(bang)
     if a:bang == '!' ||  g:instant_rst_forever == 1
         " Add a always preview rst mode
         aug instant-rst
-            au! 
+            sil! au! 
             if g:instant_rst_slow
                 au CursorHold,BufWrite,InsertLeave <buffer>,*.rst call s:temperedRefresh()
             else
@@ -182,7 +182,7 @@ fu! s:preview(bang)
         aug END
     else
         aug instant-rst
-            au! <buffer>
+            sil! au! <buffer>
             if g:instant_rst_slow
                 au CursorHold,BufWrite,InsertLeave <buffer> call s:temperedRefresh()
             else
