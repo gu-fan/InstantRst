@@ -139,8 +139,9 @@ function! s:popBuffer(bufnr)
     sil! call remove(s:buffers, a:bufnr)
 endfu
 
-fu! s:cleanUp(bang)
-    if a:bang == '!'
+fu! s:cleanUp(...)
+    let bang = get(a:000, 0 , '')
+    if bang == '!'
         let s:buffers = {}
         call s:killDaemon()
     else
