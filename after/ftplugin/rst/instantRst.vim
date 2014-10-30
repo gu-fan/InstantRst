@@ -2,10 +2,6 @@
 " Got the solution in python way from suan's instant-markdown
 " https://github.com/suan/instant-markdown-d
 
-if !executable('curl')
-    echoe "[InstantRst] curl is required. Stop"
-    finish
-endif
 
 if !exists('g:instant_rst_slow')
     let g:instant_rst_slow = 0
@@ -51,6 +47,17 @@ fun! s:system(cmd) abort "{{{
 endfun "}}}
 
 function! s:startDaemon(file) "{{{
+    if !executable('instantRst')
+        echoe "[InstantRst] intant-rst.py is required."
+        echoe "sudo pip install https://github.com/Rykka/instant-rst.py/archive/master.zip"
+        return -1
+    endif
+
+    if !executable('curl')
+        echoe "[InstantRst] curl is required."
+        echoe "sudo apt-get install curl"
+        return -1
+    endif
     if g:_instant_rst_daemon_started == 0
         let args_browser = g:instant_rst_browser != '' ? 
                     \ ' -b '.g:instant_rst_browser : ''
@@ -156,14 +163,17 @@ endfu
 
 
 fu! s:preview(bang)
+
+    if s:startDaemon(expand('%:p')) == -1
+        return
+    endif
+    call s:pushBuffer(bufnr('%'))
+    call s:refreshView()
+
     echohl ModeMsg
     echon "[InstantRst]"
     echohl Normal
     echon " Preview buffer at http://localhost:".g:instant_rst_port
-
-    call s:startDaemon(expand('%:p'))
-    call s:pushBuffer(bufnr('%'))
-    call s:refreshView()
 
     if a:bang == '!' ||  g:instant_rst_forever == 1
         " Add a always preview rst mode
