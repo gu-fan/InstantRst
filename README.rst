@@ -13,6 +13,8 @@ InstantRst
 A vim plugin for preview rst document instantly.
 
 You can share the address through LAN too.
+(And, You should note, all the navigation/edit inside your rst wiki will be show on that address,
+if with ``InstantRst!``)
 
 .. figure:: https://github.com/Rykka/github_things/raw/master/image/rst_quick_start.gif
     :align: center
