@@ -60,6 +60,14 @@ Inside a rst buffer.
 :StopInstantRst[!]
     Stop Preview current buffer
     Add ``!`` to  stop preview **ALL** rst buffer.
+    
+
+
+:NOTE: 
+
+    If you find the server is still runnning after you stop it.
+
+    You can find the process of ``instantRst`` and stop it manually.
 
 
 Options
@@ -91,7 +99,7 @@ g:instant_rst_port
 
     And you can open it at your lan ip too.
 
-    If your vim is installed with '-py', then it will open at your lan ip.
+    If your vim is installed with '+py', then it will open at your lan ip.
 
     like ``http://192.168.1.123:5676``
 

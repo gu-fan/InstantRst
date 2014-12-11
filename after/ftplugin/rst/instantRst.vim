@@ -49,10 +49,12 @@ endfun "}}}
 if has('python')
     py import socket,vim
     py host = socket.gethostbyname(socket.gethostname())
-    py vim.command('let s:host=' + host )
+    py vim.command('let s:host= "' + host + '"' )
 else
     let s:host = 'localhost'
 endif
+
+echom s:host
 
 function! s:startDaemon(file) "{{{
     if !executable('instantRst')
@@ -182,7 +184,7 @@ fu! s:preview(bang)
     echohl ModeMsg
     echon "[InstantRst]"
     echohl Normal
-    echon " Preview buffer at http://" + host + ":".g:instant_rst_port
+    echon " Preview buffer at http://" . s:host . ":".g:instant_rst_port
 
     if a:bang == '!' ||  g:instant_rst_forever == 1
         " Add a always preview rst mode
