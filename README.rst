@@ -12,6 +12,8 @@ InstantRst
 
 A vim plugin for preview rst document instantly.
 
+You can share the address through LAN too.
+
 .. figure:: https://github.com/Rykka/github_things/raw/master/image/rst_quick_start.gif
     :align: center
 
@@ -85,7 +87,7 @@ g:instant_rst_static
 g:instant_rst_port
     The port of webserver, default is ``5676``.
 
-    Then the server is at ``http://localhost:5676``
+    Then the server is at ``http://localhost:5676`` 
 
     And you can open it at your lan ip too.
 
