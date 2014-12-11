@@ -46,6 +46,14 @@ fun! s:system(cmd) abort "{{{
     endif
 endfun "}}}
 
+if has('python')
+    py import socket,vim
+    py host = socket.gethostbyname(socket.gethostname())
+    py vim.command('let s:host=' + host )
+else
+    let s:host = 'localhost'
+endif
+
 function! s:startDaemon(file) "{{{
     if !executable('instantRst')
         echoe "[InstantRst] intant-rst.py is required."
@@ -85,7 +93,7 @@ endfun "}}}
 
 function! s:killDaemon()
     if g:_instant_rst_daemon_started == 1
-        call s:system("curl -s -X DELETE http://localhost:".g:instant_rst_port." / &>/dev/null &")
+        call s:system("curl -s -X DELETE http://" . s:host .  ":".g:instant_rst_port." / &>/dev/null &")
         let g:_instant_rst_daemon_started = 0
     endif
 endfu
@@ -100,8 +108,8 @@ endfun
 fun! s:refreshView()
     call s:updateTmpFile(bufnr('%'))
     let p = string(str2float(line('.')) / line('$'))
-    let cmd = "curl -d 'file=". b:ir_tmpfile ."' -d 'p=".p."'  http://localhost:".g:instant_rst_port." &>/dev/null &"
-    " >>> let cmd = 'curl -d name=hello http://localhost:'.g:instant_rst_port
+    let cmd = "curl -d 'file=". b:ir_tmpfile ."' -d 'p=".p."'  http://" . s:host . ":".g:instant_rst_port." &>/dev/null &"
+    " >>> let cmd = 'curl -d name=hello http://' . s:host . ':'.g:instant_rst_port
     " >>> call s:system(cmd)
     call s:system(cmd)
 endfun
@@ -115,7 +123,7 @@ fun! s:scroll() "{{{
 
     let b:scroll_pos = p
 
-    let cmd = "curl -d p='".p."' http://localhost:".g:instant_rst_port." &>/dev/null &"
+    let cmd = "curl -d p='".p."' http://" . s:host . ":".g:instant_rst_port." &>/dev/null &"
     call s:system(cmd)
 
 endfun "}}}
@@ -174,7 +182,7 @@ fu! s:preview(bang)
     echohl ModeMsg
     echon "[InstantRst]"
     echohl Normal
-    echon " Preview buffer at http://localhost:".g:instant_rst_port
+    echon " Preview buffer at http://" + host + ":".g:instant_rst_port
 
     if a:bang == '!' ||  g:instant_rst_forever == 1
         " Add a always preview rst mode

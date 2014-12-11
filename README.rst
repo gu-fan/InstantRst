@@ -22,7 +22,7 @@ A vim plugin for preview rst document instantly.
 
 This is an intro for vim usage.
 
-To use the server, see instant-rst.py_.
+To use only the server, see instant-rst.py_.
 
 Install
 -------
@@ -85,7 +85,15 @@ g:instant_rst_static
 g:instant_rst_port
     The port of webserver, default is ``5676``.
 
-    Then the server is at http://localhost:5676
+    Then the server is at ``http://localhost:5676``
+
+    And you can open it at your lan ip too.
+
+    If your vim is installed with '-py', then it will open at your lan ip.
+
+    like ``http://192.168.1.123:5676``
+
+
 
 g:instant_rst_forever 
     Always preview all rst buffer, default is ``0``.
