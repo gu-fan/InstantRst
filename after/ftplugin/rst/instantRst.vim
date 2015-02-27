@@ -58,8 +58,6 @@ else
     let s:host = 'localhost'
 endif
 
-echom s:host
-
 function! s:startDaemon(file) "{{{
     if !executable('instantRst')
         echoe "[InstantRst] intant-rst.py is required."
