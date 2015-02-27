@@ -31,6 +31,10 @@ if !exists('g:instant_rst_bind_scroll')
     let g:instant_rst_bind_scroll = 1
 endif
 
+if !exists('g:instant_rst_localhost_only')
+    let g:instant_rst_localhost_only = 0
+endif
+
 if !exists('g:_instant_rst_daemon_started')
     let g:_instant_rst_daemon_started = 0
 endif
@@ -46,7 +50,7 @@ fun! s:system(cmd) abort "{{{
     endif
 endfun "}}}
 
-if has('python')
+if has('python') && g:instant_rst_localhost_only != 1
     py import socket,vim
     py host = socket.gethostbyname(socket.gethostname())
     py vim.command('let s:host= "' + host + '"' )
@@ -79,6 +83,8 @@ function! s:startDaemon(file) "{{{
                     \ ' -t '.g:instant_rst_template : ''
         let args_file = a:file != '' ? 
                     \ ' -f '.a:file : ''
+        let args_local = g:instant_rst_localhost_only == 1 ? 
+                    \ ' -l ' : ''
 
         let  cmd = "instantRst "
                     \.args_browser
@@ -86,6 +92,7 @@ function! s:startDaemon(file) "{{{
                     \.args_file
                     \.args_static
                     \.args_template
+                    \.args_local
                     \.' &>/dev/null'
                     \.' &'
         call s:system(cmd)

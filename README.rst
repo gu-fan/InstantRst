@@ -105,6 +105,11 @@ g:instant_rst_port
 
     like ``http://192.168.1.123:5676``
 
+g:instant_rst_localhost_only
+    Only use localhost, and disable lan ip
+
+    Whenever your vim has '+py'
+
 
 
 g:instant_rst_forever 
