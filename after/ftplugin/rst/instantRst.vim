@@ -50,13 +50,17 @@ fun! s:system(cmd) abort "{{{
     endif
 endfun "}}}
 
-if has('python') && g:instant_rst_localhost_only != 1
-    py import socket,vim
-    py host = socket.gethostbyname(socket.gethostname())
-    py vim.command('let s:host= "' + host + '"' )
-else
-    let s:host = 'localhost'
-endif
+" XXX:Avoid using socket host name, for sake of the risk of a PC have multiple
+" LAN IP which will causing mistake.
+" if has('python') && g:instant_rst_localhost_only != 1
+"     py import socket,vim
+"     py host = socket.gethostbyname(socket.gethostname())
+"     py vim.command('let s:host= "' + host + '"' )
+" else
+"     let s:host = 'localhost'
+" endif
+
+let s:host = 'localhost'
 
 function! s:startDaemon(file) "{{{
     if !executable('instantRst')
