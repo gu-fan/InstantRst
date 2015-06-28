@@ -110,8 +110,6 @@ g:instant_rst_localhost_only
 
     Whenever your vim has '+py'
 
-
-
 g:instant_rst_forever 
     Always preview all rst buffer, default is ``0``.
 
@@ -121,6 +119,16 @@ g:instant_rst_bind_scroll
     When scrolling with Vim, The browser will scroll either.
 
     default is ``1``
+
+g:instant_rst_additional_dirs
+    Serve additional directories for previewing, default is an empty array ``[]``.
+
+    For example: ``['/home/<my_user>/<my_rst_project>/images', '/home/<my_user>/<my_rst_project>/docs']``
+
+    It requires the absolute path of the directory, and the last directory name is used in the server.
+
+    A request made to ``/images/cats/1.png`` will try to serve the file from ``/home/<my_user>/<my_rst_project>/images/cats/1.png``
+
 
 TODO
 ----

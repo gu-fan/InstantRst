@@ -35,6 +35,10 @@ if !exists('g:instant_rst_localhost_only')
     let g:instant_rst_localhost_only = 0
 endif
 
+if !exists('g:instant_rst_additional_dirs')
+    let g:instant_rst_additional_dirs = []
+endif
+
 if !exists('g:_instant_rst_daemon_started')
     let g:_instant_rst_daemon_started = 0
 endif
@@ -87,6 +91,11 @@ function! s:startDaemon(file) "{{{
                     \ ' -f '.a:file : ''
         let args_local = g:instant_rst_localhost_only == 1 ? 
                     \ ' -l ' : ''
+        let args_additional_dirs = ''
+
+        for directory in g:instant_rst_additional_dirs
+            let args_additional_dirs .= ' -d '.directory
+        endfor
 
         let  cmd = "instantRst "
                     \.args_browser
@@ -95,6 +104,7 @@ function! s:startDaemon(file) "{{{
                     \.args_static
                     \.args_template
                     \.args_local
+                    \.args_additional_dirs
                     \.' &>/dev/null'
                     \.' &'
         call s:system(cmd)
