@@ -1,7 +1,7 @@
 InstantRst
 ===========
 
-:version: 0.9.7
+:version: 0.9.8
 
 ..
 
@@ -154,6 +154,12 @@ for debian user, you may need to install gevent manually
     sudo pip install gevent
 
 
+
+CHANGELOG
+---------
+
+0.9.8
+    add support for static file directory
 
 License
 -------

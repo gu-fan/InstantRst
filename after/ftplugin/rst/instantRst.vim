@@ -129,7 +129,8 @@ endfun
 fun! s:refreshView()
     call s:updateTmpFile(bufnr('%'))
     let p = string(str2float(line('.')) / line('$'))
-    let cmd = "curl -d 'file=". b:ir_tmpfile ."' -d 'p=".p."'  http://" . s:host . ":".g:instant_rst_port." &>/dev/null &"
+    let dir = expand('%:p:h')
+    let cmd = "curl -d 'file=". b:ir_tmpfile ."' -d 'p=".p."' -d 'dir=".dir."'  http://" . s:host . ":".g:instant_rst_port." &>/dev/null &"
     " >>> let cmd = 'curl -d name=hello http://' . s:host . ':'.g:instant_rst_port
     " >>> call s:system(cmd)
     call s:system(cmd)
