@@ -88,7 +88,7 @@ function! s:startDaemon(file) "{{{
         let args_template = g:instant_rst_template != '' ? 
                     \ ' -t '.g:instant_rst_template : ''
         let args_file = a:file != '' ? 
-                    \ ' -f '.a:file : ''
+                    \ ' -f '.substitute(a:file, ' ', '\\ ', 'g') : ''
         let args_local = g:instant_rst_localhost_only == 1 ? 
                     \ ' -l ' : ''
         let args_additional_dirs = ''
