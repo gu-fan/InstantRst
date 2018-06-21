@@ -97,7 +97,7 @@ function! s:startDaemon(file) "{{{
             let args_additional_dirs .= ' -d '.directory
         endfor
 
-        let  cmd = "instantRst "
+        let  cmd = "sh -c \"instantRst"
                     \.args_browser
                     \.args_port
                     \.args_file
@@ -105,8 +105,8 @@ function! s:startDaemon(file) "{{{
                     \.args_template
                     \.args_local
                     \.args_additional_dirs
-                    \.' &>/dev/null'
-                    \.' &'
+                    \." &>/dev/null"
+                    \." &\""
         call s:system(cmd)
         let g:_instant_rst_daemon_started = 1
     endif
@@ -114,7 +114,7 @@ endfun "}}}
 
 function! s:killDaemon()
     if g:_instant_rst_daemon_started == 1
-        call s:system("curl -s -X DELETE http://" . s:host .  ":".g:instant_rst_port." / &>/dev/null &")
+        call s:system("sh -c \"curl -s -X DELETE http://" . s:host .  ":".g:instant_rst_port." / &>/dev/null &\"")
         let g:_instant_rst_daemon_started = 0
     endif
 endfu
@@ -130,7 +130,7 @@ fun! s:refreshView()
     call s:updateTmpFile(bufnr('%'))
     let p = string(str2float(line('.')) / line('$'))
     let dir = expand('%:p:h')
-    let cmd = "curl -d 'file=". b:ir_tmpfile ."' -d 'p=".p."' -d 'dir=".dir."'  http://" . s:host . ":".g:instant_rst_port." &>/dev/null &"
+    let cmd = "sh -c \"curl -d 'file=". b:ir_tmpfile ."' -d 'p=".p."' -d 'dir=".dir."'  http://" . s:host . ":".g:instant_rst_port." &>/dev/null &\""
     " >>> let cmd = 'curl -d name=hello http://' . s:host . ':'.g:instant_rst_port
     " >>> call s:system(cmd)
     call s:system(cmd)
@@ -145,7 +145,7 @@ fun! s:scroll() "{{{
 
     let b:scroll_pos = p
 
-    let cmd = "curl -d p='".p."' http://" . s:host . ":".g:instant_rst_port." &>/dev/null &"
+    let cmd = "sh -c \"curl -d p='".p."' http://" . s:host . ":".g:instant_rst_port." &>/dev/null &\""
     call s:system(cmd)
 
 endfun "}}}
