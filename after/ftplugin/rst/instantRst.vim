@@ -7,8 +7,12 @@ if !exists('g:instant_rst_slow')
     let g:instant_rst_slow = 0
 endif
 
+if !exists("*vimproc#system")
+    let g:instant_rst_slow = 1
+endif
+
 if !exists('g:instant_rst_forever')
-    let g:instant_rst_forever = 0
+    let g:instant_rst_forever = 1
 endif
 
 if !exists('g:instant_rst_browser')
@@ -24,7 +28,7 @@ if !exists('g:instant_rst_template')
 endif
 
 if !exists('g:instant_rst_port')
-    let g:instant_rst_port = 5676
+    let g:instant_rst_port = 5000
 endif
 
 if !exists('g:instant_rst_bind_scroll')
@@ -46,6 +50,7 @@ endif
 if !exists('s:buffers')
     let s:buffers = {}
 endif
+
 fun! s:system(cmd) abort "{{{
     if exists("*vimproc#system")
         call vimproc#system(a:cmd)
@@ -66,7 +71,7 @@ endfun "}}}
 
 let s:host = 'localhost'
 
-function! s:startDaemon(file) "{{{
+fun! s:startDaemon(file) "{{{
     if !executable('instantRst')
         echoe "[InstantRst] intant-rst.py is required."
         echoe "sudo pip install https://github.com/Rykka/instant-rst.py/archive/master.zip"
@@ -79,9 +84,10 @@ function! s:startDaemon(file) "{{{
         return -1
     endif
     if g:_instant_rst_daemon_started == 0
+
         let args_browser = g:instant_rst_browser != '' ? 
                     \ ' -b '.g:instant_rst_browser : ''
-        let args_port = g:instant_rst_port != 5676 ? 
+        let args_port = g:instant_rst_port != 5000 ? 
                     \ ' -p '.g:instant_rst_port : ''
         let args_static = g:instant_rst_static != '' ? 
                     \ ' -s '.g:instant_rst_static : ''
@@ -97,7 +103,8 @@ function! s:startDaemon(file) "{{{
             let args_additional_dirs .= ' -d '.directory
         endfor
 
-        let  cmd = "instantRst "
+        let psct = "instantRst "
+        let cmd = psct
                     \.args_browser
                     \.args_port
                     \.args_file
@@ -105,48 +112,74 @@ function! s:startDaemon(file) "{{{
                     \.args_template
                     \.args_local
                     \.args_additional_dirs
-                    \.' &>/dev/null'
+                    \.' >/dev/null'
+                    \.' 2>&1'
                     \.' &'
+        " echom cmd
         call s:system(cmd)
         let g:_instant_rst_daemon_started = 1
     endif
 endfun "}}}
 
-function! s:killDaemon()
+fun! s:killDaemon()
+    echom "curl -s -X DELETE http://" . s:host .  ":".g:instant_rst_port." >/dev/null 2>&1 &"
+    call s:system("curl -s -X DELETE http://" . s:host .  ":".g:instant_rst_port." >/dev/null 2>&1 &")
     if g:_instant_rst_daemon_started == 1
-        call s:system("curl -s -X DELETE http://" . s:host .  ":".g:instant_rst_port." / &>/dev/null &")
+        " echom "curl -s -X DELETE http://" . s:host .  ":".g:instant_rst_port." >/dev/null 2>&1 &"
+        " call s:system("curl -s -X DELETE http://" . s:host .  ":".g:instant_rst_port." >/dev/null 2>&1 &")
+        " call s:system("curl -s -X DELETE http://" . s:host .  ":".g:instant_rst_port." / &>/dev/null &")
         let g:_instant_rst_daemon_started = 0
     endif
 endfu
 fun! s:updateTmpFile(bufname)
     if !exists("b:ir_tmpfile")
-        let b:ir_tmpfile = tempname()
+        " echom "get new tmp name"
+        " let b:ir_tmpfile = tempname()
+        let b:ir_tmpfile = $HOME. "/.vim/tmp.rst"
     endif
     let buf = getbufline(a:bufname, 1, "$")
+    " echom "write file: " . b:ir_tmpfile
+    " echom "buf " . buf[0]
     call writefile(buf, b:ir_tmpfile)
+    " echom "write file finish: " . b:ir_tmpfile
+    " let cmd = "cat ".b:ir_tmpfile
+    " call s:system(cmd)
 endfun
  
 fun! s:refreshView()
+    " echo "refresh"
     call s:updateTmpFile(bufnr('%'))
     let p = string(str2float(line('.')) / line('$'))
     let dir = expand('%:p:h')
-    let cmd = "curl -d 'file=". b:ir_tmpfile ."' -d 'p=".p."' -d 'dir=".dir."'  http://" . s:host . ":".g:instant_rst_port." &>/dev/null &"
+    " let cmd = "curl -d 'file=". b:ir_tmpfile ."' -d 'p=".p."' -d 'dir=".dir."'  http://" . s:host . ":".g:instant_rst_port." &>/dev/null &"
+    let cmd = "curl -d 'file=". b:ir_tmpfile ."' -d 'pos=".p."' -d 'dir=".dir."'  http://" . s:host . ":".g:instant_rst_port." >/dev/null 2>&1 &"
     " >>> let cmd = 'curl -d name=hello http://' . s:host . ':'.g:instant_rst_port
     " >>> call s:system(cmd)
-    call s:system(cmd)
+    " echom "system ". cmd
+    silent! call s:system(cmd)
 endfun
 
 fun! s:scroll() "{{{
-    let p = string(str2float(line('.')) / line('$'))
+    let p = str2float(line('.')) / line('$')
 
     if exists('b:scroll_pos') && b:scroll_pos == p
         return
     endif
 
-    let b:scroll_pos = p
 
-    let cmd = "curl -d p='".p."' http://" . s:host . ":".g:instant_rst_port." &>/dev/null &"
-    call s:system(cmd)
+    if !exists('b:scroll_pos')
+        let b:scroll_pos = 0.0
+    endif
+
+    echo abs(p-b:scroll_pos)
+
+    if abs(p - b:scroll_pos) > 0.05
+        let b:scroll_pos = p
+
+        " let cmd = "curl -d pos='".p."' http://" . s:host . ":".g:instant_rst_port." &>/dev/null &"
+        let cmd = "curl -d pos='".string(p)."' http://" . s:host . ":".g:instant_rst_port." >/dev/null 2>&1 &"
+        call s:system(cmd)
+    endif
 
 endfun "}}}
 
@@ -154,10 +187,14 @@ fu! s:temperedRefresh()
     if !exists('b:changedtickLast')
         let b:changedtickLast = b:changedtick
         call s:refreshView()
-    elseif b:changedtickLast != b:changedtick
+    endif
+
+    " only refresh every ten
+    if b:changedtickLast < b:changedtick + 10
         let b:changedtickLast = b:changedtick
         call s:refreshView()
     endif
+
 endfu
 
 
@@ -190,7 +227,6 @@ fu! s:cleanUp(...)
         au! instant-rst * <buffer>
     endif
 endfu
-
 
 
 fu! s:preview(bang)
