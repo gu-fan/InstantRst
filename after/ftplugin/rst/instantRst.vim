@@ -102,8 +102,7 @@ fun! s:startDaemon(file) "{{{
             let args_additional_dirs .= ' -d '.directory
         endfor
 
-        let psct = "instantRst "
-        let cmd = psct
+        let  cmd = "sh -c \"instantRst"
                     \.args_browser
                     \.args_port
                     \.args_file
@@ -114,7 +113,6 @@ fun! s:startDaemon(file) "{{{
                     \.' >/dev/null'
                     \.' 2>&1'
                     \.' &'
-        " echom cmd
         call s:system(cmd)
         let g:_instant_rst_daemon_started = 1
     endif
