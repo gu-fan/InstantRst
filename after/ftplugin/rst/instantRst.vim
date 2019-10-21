@@ -2,7 +2,6 @@
 " Got the solution in python way from suan's instant-markdown
 " https://github.com/suan/instant-markdown-d
 
-
 if !exists('g:instant_rst_slow')
     let g:instant_rst_slow = 0
 endif
