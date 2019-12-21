@@ -110,7 +110,7 @@ fun! s:startDaemon(file) "{{{
                     \.args_template
                     \.args_local
                     \.args_additional_dirs
-                    \.' >/dev/null'
+                    \.'" >/dev/null'
                     \.' 2>&1'
                     \.' &'
         call s:system(cmd)
