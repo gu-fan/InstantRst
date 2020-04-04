@@ -85,7 +85,7 @@ fun! s:startDaemon(file) "{{{
     if g:_instant_rst_daemon_started == 0
 
         let args_browser = g:instant_rst_browser != '' ? 
-                    \ ' -b '.g:instant_rst_browser : ''
+                    \ ' -b '.escape(g:instant_rst_browser, ' ') : ''
         let args_port = g:instant_rst_port != 5000 ? 
                     \ ' -p '.g:instant_rst_port : ''
         let args_static = g:instant_rst_static != '' ? 
